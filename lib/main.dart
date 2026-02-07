@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/parking_locations.dart';
+import 'screens/parking_map.dart';
+import 'screens/find_vehicle.dart';
+import 'screens/parking_detail.dart';
 
 void main() {
   runApp(const ParkSenseApp());
@@ -11,10 +14,19 @@ class ParkSenseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ParkSense AI',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const ParkingLocationsPage(),
       debugShowCheckedModeBanner: false,
+      title: 'ParkSense AI',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const ParkingLocationsPage(),
+        '/map': (context) => const ParkingMapPage(),
+        '/find': (context) => FindVehiclePage(),
+        '/detail': (context) => const ParkingDetailScreen(),
+      },
     );
   }
 }

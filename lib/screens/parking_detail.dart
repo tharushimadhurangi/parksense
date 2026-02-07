@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const ParkingDetailApp());
-}
-
-class ParkingDetailApp extends StatelessWidget {
-  const ParkingDetailApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ParkingDetailScreen(),
-    );
-  }
-}
-
 class ParkingDetailScreen extends StatefulWidget {
   const ParkingDetailScreen({super.key});
 
@@ -31,11 +15,13 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      /// TOP APP BAR
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: const Icon(Icons.arrow_back, color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         centerTitle: true,
         title: const Text(
           "Detail",
@@ -54,68 +40,47 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            /// IMAGE SECTION
+            /// SAFE IMAGE PLACEHOLDER
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      "assets/parking.jpg",
-                      height: 180,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Container(
-                    height: 46,
-                    width: 46,
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.my_location,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
+              child: Container(
+                height: 180,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Center(
+                  child: Icon(Icons.local_parking, size: 50),
+                ),
               ),
             ),
 
-            /// LOCATION TITLE
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 "George Street",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
 
             const SizedBox(height: 6),
 
-            /// INFO ROW
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  infoText("10 Slot Available"),
-                  infoDot(),
-                  infoText("280 Meter"),
-                  infoDot(),
-                  infoText("2000/hr"),
+                  InfoText("10 Slot Available"),
+                  InfoDot(),
+                  InfoText("280 Meter"),
+                  InfoDot(),
+                  InfoText("2000/hr"),
                 ],
               ),
             ),
 
             const SizedBox(height: 20),
 
-            /// SELECT PARKING SPACE HEADER
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -123,22 +88,15 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
                 children: const [
                   Text(
                     "Select a Parking Space",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    "Reset",
-                    style: TextStyle(color: Colors.blue),
-                  ),
+                  Text("Reset", style: TextStyle(color: Colors.blue)),
                 ],
               ),
             ),
 
             const SizedBox(height: 14),
 
-            /// FORM CARD
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
@@ -149,11 +107,9 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
                 ),
                 child: Column(
                   children: [
-
                     dropdownField("Date", "1 Apr, 2025"),
                     dropdownField("Time", "12:41 AM"),
 
-                    /// HOURS COUNTER
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -161,17 +117,14 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
                         Row(
                           children: [
                             iconButton(Icons.remove, () {
-                              if (hours > 1) {
-                                setState(() => hours--);
-                              }
+                              if (hours > 1) setState(() => hours--);
                             }),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12),
                               child: Text(
                                 hours.toString(),
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             iconButton(Icons.add, () {
@@ -183,7 +136,6 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
                     ),
 
                     const SizedBox(height: 14),
-
                     dropdownField("Place", "B2 - 37"),
                   ],
                 ),
@@ -194,33 +146,9 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           ],
         ),
       ),
-
-      /// BOTTOM NAVIGATION
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 8),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
-            Icon(Icons.home_outlined),
-            Icon(Icons.location_on_outlined),
-            CircleAvatar(
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.bookmark, color: Colors.white),
-            ),
-            Icon(Icons.settings_outlined),
-          ],
-        ),
-      ),
     );
   }
 
-  /// REUSABLE DROPDOWN STYLE FIELD
   Widget dropdownField(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
@@ -230,10 +158,8 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           Text(label),
           Row(
             children: [
-              Text(
-                value,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
+              Text(value,
+                  style: const TextStyle(fontWeight: FontWeight.w500)),
               const SizedBox(width: 6),
               const Icon(Icons.keyboard_arrow_down),
             ],
@@ -243,7 +169,6 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
     );
   }
 
-  /// ICON BUTTON
   Widget iconButton(IconData icon, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
@@ -256,29 +181,19 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
   }
 }
 
-/// SMALL DOT SEPARATOR
-class infoDot extends StatelessWidget {
-  const infoDot({super.key});
-
+class InfoDot extends StatelessWidget {
+  const InfoDot({super.key});
   @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 6),
-      child: Text("•", style: TextStyle(color: Colors.grey)),
-    );
-  }
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 6),
+        child: Text("•", style: TextStyle(color: Colors.grey)),
+      );
 }
 
-/// INFO TEXT
-class infoText extends StatelessWidget {
+class InfoText extends StatelessWidget {
   final String text;
-  const infoText(this.text, {super.key});
-
+  const InfoText(this.text, {super.key});
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(color: Colors.grey),
-    );
-  }
+  Widget build(BuildContext context) =>
+      Text(text, style: const TextStyle(color: Colors.grey));
 }
